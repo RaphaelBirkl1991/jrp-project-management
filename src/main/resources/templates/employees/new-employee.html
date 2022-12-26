@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>New Employee</title>
+
+<head th:replace="layouts :: header"></head>
+
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+<br>
+<br>
+<h3>Create new Employee</h3>
+<form action="/employees/save" th:object="${employee}" method="POST">
+  <br>
+  <input type="text" placeholder="Firstname" th:field="${employee.firstName}" />
+  <input type="text" placeholder="Lastname" th:field="${employee.lastName}" />
+  <input type="text" placeholder="Email" th:field="${employee.email}"/>
+    <button type="submit">submit</button>
+
+</form>
+
+</body>
+</html>
+

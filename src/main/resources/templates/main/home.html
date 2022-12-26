@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Home</title>
+<head th:replace="layouts :: header"></head>
+
+<body>
+<nav th:replace="layouts :: navbar"></nav>
+<br>
+<br>
+  <div>
+    <h4>Current Projects</h4>
+    <table>
+      <thead>
+      <tr>
+        <th>Project Name</th>
+        <th>Project Stage</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="aProject : ${projects}">
+        <td th:text="${aProject.name}" />
+        <td th:text="${aProject.stage}" />
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+<br>
+<br>
+
+  <div>
+    <h4>Current Employees</h4>
+    <table>
+      <thead>
+      <tr>
+        <th> First Name</th>
+        <th> Last Name</th>
+        <th> Email-Address</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="aEmployee : ${employees}">
+        <td th:text="${aEmployee.firstName}" />
+        <td th:text="${aEmployee.lastName}" />
+        <td th:text="${aEmployee.email}" />
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+
+
+
+
+</body>
+</html>
