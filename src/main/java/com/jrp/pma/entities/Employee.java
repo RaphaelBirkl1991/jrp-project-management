@@ -1,11 +1,15 @@
 package com.jrp.pma.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
+import java.util.List;
+
+
+@Getter @Setter
+@Entity @NoArgsConstructor
 public class Employee {
 
     @Id
@@ -15,44 +19,26 @@ public class Employee {
     private String lastName;
     private String email;
 
-    public Employee() {
-    }
+    @ManyToMany(
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST},
+            fetch = FetchType.LAZY
+    )
+    @JoinTable(
+            name="project_employee",
+            joinColumns = @JoinColumn(name="employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id")
+    )
+    private List<Project> projects;
 
-    public Employee(String firstName, String lastName, String email) {
+
+
+
+    public Employee(String firstName, String lastName, String email, List<Project> projects) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.projects = projects;
     }
 
-    public long getEmployeeId() {
-        return employeeId;
-    }
 
-    public void setEmployeeId(long employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }

@@ -1,6 +1,8 @@
 package com.jrp.pma.controllers;
 
+import com.jrp.pma.dao.EmployeeRepository;
 import com.jrp.pma.dao.ProjectRepository;
+import com.jrp.pma.entities.Employee;
 import com.jrp.pma.entities.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,9 @@ public class ProjectController {
     @Autowired
     ProjectRepository proRepo;
 
+    @Autowired
+    EmployeeRepository empRepo;
+
     @GetMapping
     public String displayProjects(Model model){
         List<Project> projects = proRepo.findAll();
@@ -27,14 +32,18 @@ public class ProjectController {
 
     @GetMapping("/new")
     public String displayProjectForm(Model model){
-        Project aProject = new Project();
+        Project aProject = new Project("Large Production Deploy", "NOTSTARTED", "This requires all hands on deck for" + "the final deployment of the software into production");
+        List<Employee> employees = empRepo.findAll();
         model.addAttribute("project", aProject);
+        model.addAttribute("allEmployees", employees);
         return "projects/new-project";
     }
 
     @PostMapping("/save")
     public String createProject(Project project, Model model){
         proRepo.save(project);
+
+        // use a redirect to prevent duplicate submissions
         return "redirect:/projects/new";
     }
 
